@@ -17,14 +17,14 @@ public class UnitTest {
     public void testOrderPizza_PizzaExists() {
 
         Pizzeria pizzeria = new Pizzeria();
-        Pizza pizza = new Pizza("Margherita", 100.0);
+        Pizza pizza = new Pizza("Margarita", 100.0);
         pizzeria.makePizza(pizza);
 
 
         Customer customer = new Customer(1, "Ivan", "123456789");
 
 
-        boolean result = customer.orderPizza(pizzeria, "Margherita");
+        boolean result = customer.orderPizza(pizzeria, "Margarita");
 
 
         assertTrue(result);
@@ -38,7 +38,7 @@ public class UnitTest {
 
         Customer customer = new Customer(2, "Anna", "987654321");
 
-        boolean result = customer.orderPizza(pizzeria, "Hawaii");
+        boolean result = customer.orderPizza(pizzeria, "Hawaiian");
 
         assertFalse(result);
         assertEquals(0.0, customer.getOrderPrice(), 0.001);
@@ -53,7 +53,7 @@ public class UnitTest {
 
     @Test
     public void testApplyTooHighDiscount() {
-        Pizza pizza = new Pizza( "Veggie", 120.0);
+        Pizza pizza = new Pizza( "Hawaiian", 120.0);
         pizza.applyDiscount(150);
 
         assertEquals(120.0, pizza.getPrice(), 0.001);
@@ -62,7 +62,7 @@ public class UnitTest {
     @Test
     public void testSellPizza_PizzaExists() {
         Pizzeria pizzeria = new Pizzeria("Test Pizzeria");
-        Pizza pizza1 = new Pizza("Margherita", 100.0);
+        Pizza pizza1 = new Pizza("Margarita", 100.0);
         Pizza pizza2 = new Pizza("Pepperoni", 120.0);
         pizzeria.makePizza(pizza1);
         pizzeria.makePizza(pizza2);
@@ -88,7 +88,7 @@ public class UnitTest {
 
     @Test
     public void testApplyValidDiscount() {
-        Pizza pizza = new Pizza("Four Cheese", 150.0);
+        Pizza pizza = new Pizza("Margarita", 150.0);
         pizza.applyDiscount(10);
 
         assertEquals(135.0, pizza.getPrice(), 0.001);
@@ -97,12 +97,12 @@ public class UnitTest {
     @Test
     public void testSellPizza_MultipleSameNames() {
         Pizzeria pizzeria = new Pizzeria("Test Pizzeria");
-        Pizza pizza1 = new Pizza("Capricciosa", 110.0);
-        Pizza pizza2 = new Pizza("Capricciosa", 115.0);
+        Pizza pizza1 = new Pizza("Pepperoni", 110.0);
+        Pizza pizza2 = new Pizza("Pepperoni", 115.0);
         pizzeria.makePizza(pizza1);
         pizzeria.makePizza(pizza2);
 
-        Pizza sold = pizzeria.sellPizza("Capricciosa");
+        Pizza sold = pizzeria.sellPizza("Pepperoni");
 
 
         assertEquals(pizza1, sold);
@@ -180,8 +180,8 @@ public class UnitTest {
         File mockFile = mock(File.class);
         dataManager.mapper = mockObjectMapper;
 
-        Pizza pizza1 = new Pizza("Margherita", 8.99);
-        Pizza pizza2 = new Pizza("Pepperoni", 9.99);
+        Pizza pizza1 = new Pizza("Margarita", 110);
+        Pizza pizza2 = new Pizza("Pepperoni", 111);
         Pizza[] pizzasArray = {pizza1, pizza2};
 
 
