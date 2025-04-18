@@ -27,8 +27,8 @@ public class UnitTest {
         boolean result = customer.orderPizza(pizzeria, "Margherita");
 
 
-        assertTrue(result, "Очікується, що замовлення буде успішним");
-        assertEquals(100.0, customer.getOrderPrice(), 0.001, "Загальна ціна повинна дорівнювати 100.0");
+        assertTrue(result);
+        assertEquals(100.0, customer.getOrderPrice(), 0.001);
     }
 
     @Test
@@ -40,8 +40,8 @@ public class UnitTest {
 
         boolean result = customer.orderPizza(pizzeria, "Hawaii");
 
-        assertFalse(result, "Очікується, що замовлення не відбудеться");
-        assertEquals(0.0, customer.getOrderPrice(), 0.001, "Ціна повинна залишитися нульовою");
+        assertFalse(result);
+        assertEquals(0.0, customer.getOrderPrice(), 0.001);
     }
     @Test
     public void testApplyNegativeDiscount() {
@@ -82,14 +82,14 @@ public class UnitTest {
 
         Pizza result = pizzeria.sellPizza("NonExistent");
 
-        // Очікуємо null, бо піца не знайдена
-        assertNull(result, "Очікується, що метод поверне null, якщо піца не знайдена");
+
+        assertNull(result);
     }
 
     @Test
     public void testApplyValidDiscount() {
         Pizza pizza = new Pizza("Four Cheese", 150.0);
-        pizza.applyDiscount(10); // 10% знижка
+        pizza.applyDiscount(10);
 
         assertEquals(135.0, pizza.getPrice(), 0.001);
     }
@@ -104,7 +104,7 @@ public class UnitTest {
 
         Pizza sold = pizzeria.sellPizza("Capricciosa");
 
-        // Перевірка: має бути видалено першу знайдену піцу
+
         assertEquals(pizza1, sold);
         assertEquals(1, pizzeria.getPizzas().size());
     }
@@ -132,13 +132,13 @@ public class UnitTest {
     @Test
     public void testUpdatePizza_Success() {
         Pizzeria pizzeria = new Pizzeria("Test Pizzeria");
-        Pizza pizza = new Pizza("Funghi", 95.0);
+        Pizza pizza = new Pizza("Pepperoni", 95.0);
         pizzeria.makePizza(pizza);
         int pizzaId = pizza.getId();
-        boolean updated = pizzeria.updatePizza(pizzaId, "Funghi Special", 105.0);
+        boolean updated = pizzeria.updatePizza(pizzaId, "Pepperoni Special", 105.0);
 
         assertTrue(updated);
-        assertEquals("Funghi Special", pizzeria.getPizza(pizzaId).getName());
+        assertEquals("Pepperoni Special", pizzeria.getPizza(pizzaId).getName());
         assertEquals(105.0, pizzeria.getPizza(pizzaId).getPrice());
     }
 
@@ -178,25 +178,20 @@ public class UnitTest {
         DataManager dataManager = new DataManager();
         ObjectMapper mockObjectMapper = mock(ObjectMapper.class);
         File mockFile = mock(File.class);
-        dataManager.mapper = mockObjectMapper; // Inject mock ObjectMapper into DataManager
+        dataManager.mapper = mockObjectMapper;
 
-        // Prepare test data
         Pizza pizza1 = new Pizza("Margherita", 8.99);
         Pizza pizza2 = new Pizza("Pepperoni", 9.99);
         Pizza[] pizzasArray = {pizza1, pizza2};
 
-        // Mock the behavior of ObjectMapper
-        when(mockObjectMapper.readValue(mockFile, Pizza[].class)).thenReturn(pizzasArray);
 
-        // Call the importPizzas method
+        when(mockObjectMapper.readValue(mockFile, Pizza[].class)).thenReturn(pizzasArray);
         List<Pizza> importedPizzas = dataManager.importPizzas(mockFile);
 
-        // Verify the result
         assert importedPizzas.size() == 2;
         assert importedPizzas.contains(pizza1);
         assert importedPizzas.contains(pizza2);
 
-        // Verify that readValue was called once with the correct arguments
         verify(mockObjectMapper, times(1)).readValue(mockFile, Pizza[].class);
     }
 }
